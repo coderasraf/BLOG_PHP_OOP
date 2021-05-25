@@ -417,3 +417,6 @@ margin:200px 0;
   font-weight: bold;
   border-radius: 5px;
 }
+.pagination .active {
+    background: #795107;
+}

@@ -65,8 +65,8 @@ $(window).load(function() {
 	</div>
 <div class="navsection templete">
 	<ul>
-		<li><a id="active" href="index.php">Home</a></li>
-		<li><a href="about.php">About</a></li>	
-		<li><a href="contact.php">Contact</a></li>
+		<li><a id="active" href="index">Home</a></li>
+		<li><a href="about">About</a></li>	
+		<li><a href="contact">Contact</a></li>
 	</ul>
 </div>

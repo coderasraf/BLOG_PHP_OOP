@@ -7,8 +7,22 @@
  ?>
 	<div class="contentsection contemplete clear">
 		<div class="maincontent clear">
+
+			<!-- Pagination code -->
 			<?php 
-				$sql = "SELECT * FROM tbl_post LIMIT 3";
+				$per_page = 3;
+				if (isset($_GET['page'])) {
+					$page = $_GET['page'];
+				}else{
+					$page = 1;
+				}
+
+				$start_from = ($page - 1) * $per_page;
+			 ?>
+			<!-- End paginatio code -->
+
+			<?php 
+				$sql = "SELECT * FROM tbl_post LIMIT $start_from, $per_page";
 				$posts = $db->select($sql);
 				if ($posts) {
 				foreach ($posts as $post) { ?>
@@ -26,15 +40,31 @@
 			<?php } ?> <!--- endforeach loop -->
 
 			<!-- Pagination -->
+
+			<?php 
+
+				$query = "SELECT * FROM tbl_post";
+				$result = $db->select($query);
+				$total_rows = mysqli_num_rows($result);
+				$total_pages = ceil($total_rows / $per_page);
+			 ?>
 			
 			<span class="pagination">
-				<a href="index.php?page=1">First Page</a>
-				<a class="active" href="index.php?page=1">1</a>
-				<a class="active" href="index.php?page=2">2</a>
-				<a href="index.php?page=2">Last Page</a>
+				<a href="index?page=1">First Page</a>
+				<?php for ($i=1; $i < $total_pages ; $i++) { 
+						if ($page == $i) {
+							$active = 'active';
+						}else{
+							$active = '';
+						}
+
+					?>
+				<a class="<?php if(isset($active)){echo $active; } ?>" href="index?page=<?= $i; ?>"><?= $i; ?></a>	
+				<?php }?>
+				<a href="index?page=<?= $total_pages; ?>">Last Page</a>
 			</span>
 
-			<?php }else{ header("Location:404.php"); } ?>
+			<?php } else{ header("Location:404.php"); } ?>
 		</div>
 		<?php include 'inc/sidebar.php'; ?>
 	</div>

@@ -1,3 +1,7 @@
 RewriteEngine on
 
 RewriteRule ^index$ index.php [L]
+RewriteRule ^about$ about.php [L]
+RewriteRule ^contact$ contact.php [L]
+RewriteRule ^post$ post.php [L]
+RewriteRule ^404$ 404.php [L]
