@@ -22,7 +22,7 @@
 					foreach ($posts as $post ) { ?>
 					<div class="popular clear">
 						<h3><a href="post?id=<?= $post['id']; ?>"><?= $post['title'] ?></a></h3>
-						<a href="#"><img src="admin/uploads/<?= $post['image']; ?>" alt="post image"/></a>
+						<a href="#"><img src="admin/<?= $post['image']; ?>" alt="post image"/></a>
 						<?= $fm->textShorten($post['body'], 100); ?>
 					</div>
 				<?php } } ?>		

@@ -16,12 +16,11 @@
 
 					$query = "SELECT * FROM tbl_post WHERE id = '$id'";
 					$post  = $db->select($query);
-					$result = $post->fetch_assoc();
-
-					if ($post) {  ?>
+					
+					if ($post) { $result = $post->fetch_assoc(); ?>
 						<h2><?= $result['title']; ?></h2>
 						<h4><?= $fm->formatDate($result['date']); ?>, By <?= $result['author']; ?></h4>
-						<img src="admin/uploads/<?= $result['image']; ?>" alt="MyImage"/>
+						<img src="admin/<?= $result['image']; ?>" alt="MyImage"/>
 						
 						<?= $result['body']; ?>
 					
@@ -41,7 +40,7 @@
 						if ($relatedpost) {
 							while ($row = $relatedpost->fetch_assoc()) { 
 								if ($result['id'] != $row['id']) { ?>
-						<a href="post?id=<?= $row['id']; ?>"><img src="admin/uploads/<?= $row['image']; ?>" alt="post image"/></a>
+						<a href="post?id=<?= $row['id']; ?>"><img src="admin/<?= $row['image']; ?>" alt="post image"/></a>
 						<?php }}}else{ ?>
 							<div class="alert alert-warning">
 								<h2 class="text-center">

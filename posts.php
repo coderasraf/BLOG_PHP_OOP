@@ -10,7 +10,6 @@
 					header('Location:404.php');
 				}else{
 					$id = $_GET['category'];
-					print_r($id);
 				}
 
 				$sql = "SELECT * FROM tbl_post WHERE cat='$id'";
@@ -30,7 +29,11 @@
 				</div>
 			<?php } ?> <!--- endforeach loop -->
 
-			<?php } else{ header("Location:404.php"); } ?>
+			<?php } else{  ?>
+				<div class="alert alert-danger">
+					<h1>No posts availbale in this category!</h1>
+				</div>
+			<?php } ?>
 		</div>
 		<?php include 'inc/sidebar.php'; ?>
 	</div>

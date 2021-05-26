@@ -9,6 +9,14 @@ body {
   font-size: 14px;
   padding: 0;
 }
+.error{
+	color: red;
+	font-size: 18px;
+}
+.success{
+	color: green;
+	font-size: 18px;
+}
 /* commons
 ----------------------------------------------- */
 .floatleft{float:left;}
