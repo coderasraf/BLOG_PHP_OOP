@@ -1,5 +1,30 @@
 ﻿<?php include 'inc/header.php'; ?>
 <?php include 'inc/sidebar.php'; ?>
+
+<?php 
+	
+	if (isset($_GET['delID'])) {
+
+		$delID = $_GET['delID'];
+
+		  	$selectCurrentIMG = "SELECT * FROM tbl_post WHERE id='$delID'";
+            $runIMG = $db->select($selectCurrentIMG);
+            if ($runIMG) {
+            	$rowIMG = $runIMG->fetch_assoc();
+                   unlink($rowIMG['image']);
+           	}
+         	$query = "DELETE FROM tbl_post WHERE id='$delID'";
+			$runQuery = $db->delete($query);
+			
+		if ($runQuery) {
+			echo "<script>alert('Post deleted Successfully!')</script>";
+		}else{
+			echo "<script>alert('Post not deleted Successfully!')</script>";
+		}
+	}
+
+ ?>
+
 <div class="grid_10">
     <div class="box round first grid">
         <h2>Post List</h2>
@@ -41,7 +66,7 @@
 						<td class="center"><?= $single['author']; ?></td>
 						<td>
 							<a href="editpost.php?editID=<?= $single['id']; ?>">Edit</a> || 
-							<a onclick="return confirm('Are you sure to delete!')" href="deletepost.php?delID=<?= $single['id']; ?>">Delete</a></td>
+							<a onclick="return confirm('Are you sure to delete!')" href="?delID=<?= $single['id']; ?>">Delete</a></td>
 					</tr>
 				<?php }}else{
 					echo "No post available";

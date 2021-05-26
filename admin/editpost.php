@@ -30,10 +30,20 @@
 
         if ($title == '' || $tags == '' || $cat == '' || $date == '' || $body == '' || $author == '') {
           $error = 'Fields must not be empty!';
-        }
+        }else{
+
+           
 
         if (!empty($file_name)) {
-     
+            
+            $selectCurrentIMG = "SELECT image FROM tbl_post WHERE id='$id'";
+            $runIMG = $db->select($selectCurrentIMG);
+            $rowIMG = $runIMG->fetch_assoc();
+
+            if (file_exists($rowIMG['image'])) {
+                   unlink($rowIMG['image']);
+               }
+
             if($file_size > 1048567){
                 echo "<script>alert('Image size should be less that 1 MB')</script>";
             }elseif(in_array($file_ext, $permitted) === false){
@@ -46,16 +56,15 @@
                        body     = '$body',
                        image    = '$uploaded_image',
                        author   = '$author',
-                       tags     = '$tags' WHERE id='$editID'";
+                       tags     = '$tags' WHERE id='$id'";
 
                $updated_rows = $db->insert($query);
-
-                if ($updated_rows) {
-                    move_uploaded_file($file_tmp, $uploaded_image);
-                    echo "<script>alert('Data updated successfully!')</script>";
-                }else{
-                    echo "<script>alert('Some error occoured!')</script>";
-                }
+                    if ($updated_rows) {
+                        move_uploaded_file($file_tmp, $uploaded_image);
+                        echo "<script>alert('Data updated successfully!')</script>";
+                    }else{
+                        echo "<script>alert('Some error occoured!')</script>";
+                    }
             }
         }else{
 
@@ -65,7 +74,7 @@
                        title    = '$title',
                        body     = '$body',
                        author   = '$author',
-                       tags     = '$tags' WHERE id='$editID'";
+                       tags     = '$tags' WHERE id='$id'";
 
                $updated_rows = $db->insert($query);
 
@@ -76,6 +85,7 @@
                 }
         }
     }
+}
 }
  ?>
         <div class="grid_10">
