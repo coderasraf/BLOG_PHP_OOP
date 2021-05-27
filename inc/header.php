@@ -9,7 +9,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Basic Website</title>
+	<!-- [PAGE TITLE DYNAMIC CHANGING CODE] -->
+	<?php 
+		if (isset($_GET['pagename'])) {
+
+			$pageTitle = $_GET['pagename']; ?>
+			<title><?= $pageTitle; ?> - <?= TITLE ?></title>
+
+		<?php }elseif (isset($_GET['id'])) { 
+
+			$postID = $_GET['id']; 
+			$post = "SELECT * FROM tbl_post WHERE id='$postID'";
+			$runPost = $db->select($post);
+			if ($runPost) {
+				$rowPost = $runPost->fetch_assoc();
+			}?>
+			<title><?= $rowPost['title']; ?> - <?= TITLE ?></title>
+
+		<?php }elseif (isset($_GET['category'])) {
+			$catID = $_GET['category'];
+			$category = "SELECT * FROM tbl_category WHERE id='$catID'";
+			$runCategory = $db->select($category);
+			if ($runCategory) {
+				$rowCategory = $runCategory->fetch_assoc();
+			} ?>
+			<title><?= $rowCategory['name']; ?> - <?= TITLE ?></title>
+			
+		<?php } else{ ?>
+			<title><?= $fm->title(); ?> - <?= TITLE ?></title>
+		<?php } ?>
+
+		<!-- ![PAGE TITLE DYNAMIC CHANGING CODE] -->
+
 	<meta name="language" content="English">
 	<meta name="description" content="It is a website about education">
 	<meta name="keywords" content="blog,cms blog">
@@ -84,7 +115,6 @@ $(window).load(function() {
 <div class="navsection templete">
 	<ul>
 		<li><a id="active" href="index">Home</a></li>
-		<li><a href="contact">Contact</a></li>
 		 <?php 
             $query = "SELECT * FROM tbl_page";
             $runSocial = $db->select($query);
@@ -93,5 +123,6 @@ $(window).load(function() {
             	$pageSlug = $rows['title']; ?>
             <li><a href="page?pagename=<?= $pageSlug; ?>"><?= $rows['title'] ?></a></li> 
         <?php }} ?>
+        <li><a href="contact">Contact</a></li>
 	</ul>
 </div>

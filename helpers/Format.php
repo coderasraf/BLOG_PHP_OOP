@@ -26,5 +26,27 @@
 			$data = htmlspecialchars($data);
 			return $data;
 		}
+
+		// Page title 
+
+		public function title(){
+
+			$path    = $_SERVER['SCRIPT_FILENAME'];
+			$path    = explode('/', $path);
+			$newPath = end($path);
+			$newPath = explode('.', $newPath);
+			$title   = $newPath[0];
+
+			if ($title == 'index') {
+				$title = 'home';
+			}elseif ($title=='contact') {
+				$title = 'contact';
+			}else{
+				$title = 'Hass Asraf';
+			}
+
+			return ucfirst($title);
+
+		}
 		
 	}
