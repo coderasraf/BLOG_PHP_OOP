@@ -1,5 +1,94 @@
 ﻿<?php include 'inc/header.php'; ?>
 <?php include 'inc/sidebar.php'; ?>
+
+
+<?php 
+
+
+    if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
+        if (isset($_POST['submit'])) {
+
+         $title    = $fm->validation($_POST['title']);
+         $slogan   = $fm->validation($_POST['slogan']);
+
+         $title    = mysqli_real_escape_string($db->link, $title);
+         $slogan   = mysqli_real_escape_string($db->link, $slogan);
+
+
+        $permitted = array('jpg','png','jpeg', 'gif');
+        $file_name = $_FILES['image']['name'];
+        $file_size = $_FILES['image']['size'];
+        $file_tmp  = $_FILES['image']['tmp_name'];
+
+        $div = explode('.', $file_name);
+        $file_ext = strtolower(end($div));
+        $unique_image = substr(md5(time()), 0, 15).'.'.$file_ext;
+        $uploaded_image = 'uploads/'.$unique_image;
+
+
+        if ($title == '' || $slogan == '') {
+          $error = 'Fields must not be empty!';
+        }else{
+
+           
+
+        if (!empty($file_name)) {
+            
+           
+           
+
+            if($file_size > 1048567){
+                echo "<script>alert('Image size should be less that 1 MB')</script>";
+            }elseif(in_array($file_ext, $permitted) === false){
+                echo "<script>alert('Your file should be jpg,png,gif,jpeg');</script>";
+            }else{
+                
+                $selectCurrentIMG = "SELECT * FROM title_slogan WHERE id=1";
+                $runIMG = $db->select($selectCurrentIMG);
+                $rowIMG = $runIMG->fetch_assoc();
+
+                if ($rowIMG) {
+                    if (file_exists($rowIMG['logo'])) {
+                       unlink($rowIMG['logo']);
+                   }
+                }
+
+              $query ="UPDATE title_slogan
+                       SET
+                       title      = '$title',
+                       slogan    = '$slogan',
+                       logo      = '$uploaded_image'
+                       WHERE id=1";
+
+               $updated_rows = $db->insert($query);
+                    if ($updated_rows) {
+                        move_uploaded_file($file_tmp, $uploaded_image);
+                        echo "<script>alert('Data updated successfully!')</script>";
+                    }else{
+                        echo "<script>alert('Some error occoured!')</script>";
+                    }
+            }
+        }else{
+
+            $query ="UPDATE title_slogan 
+                       SET
+                        title      = '$title',
+                        slogan    = '$slogan'
+                        WHERE id=1";
+
+               $updated_rows = $db->insert($query);
+
+                if ($updated_rows) {
+                    echo "<script>alert('Data updated successfully!')</script>";
+                }else{
+                    echo "<script>alert('Some error occoured!')</script>";
+                }
+        }
+    }
+}
+}
+ ?>
+
         <div class="grid_10">		
             <div class="box round first grid">
                 <h2>Update Site Title and Description</h2>
@@ -14,65 +103,6 @@
                     }
 
                  ?>
-
-                 <?php 
-
-                    if (isset($_POST['submit'])) {
-                        
-                        $title = $_POST['title'];
-                        $slogan = $_POST['slogan'];
-
-                        $permitted = array('jpg','png','jpeg', 'gif');
-                        $file_name = $_FILES['image']['name'];
-                        $file_size = $_FILES['image']['size'];
-                        $file_tmp  = $_FILES['image']['tmp_name'];
-
-                        $div = explode('.', $file_name);
-                        $file_ext = strtolower(end($div));
-                        $unique_image = substr(md5(time()), 0, 15).'.'.$file_ext;
-                        $uploaded_image = 'uploads/'.$unique_image;
-
-                        if (empty($title) || empty($slogan)) {
-                            echo "<script>alert('Choose an image!')</script>";
-                        }
-
-                        if (in_array($file_ext, $permitted)) {
-                           echo "<script>alert('Choose only jpg,png,jpeg and gif!')</script>";
-                        }
-
-                        if (!empty($file_name)) {
-                            
-                            $query = "UPDATE tbl_post
-                                      SET
-                                      title = '$title',
-                                      slogan = '$slogan',
-                                      logo = '$uploaded_image'
-                                      WHERE id = 1";
-                            $updateQuery = $db->update($query);
-                            if ($updateQuery) {
-                                move_uploaded_file($file_tmp, $uploaded_image);
-                                echo "<script>alert('Updated successfully!')</script>";
-                            }else{
-                                echo "<script>alert('Updated not properly!')</script>";
-                            }
-                        }else{
-
-                            $query = "UPDATE tbl_post
-                                      SET
-                                      title = '$title',
-                                      slogan = '$slogan',
-                                      WHERE id = 1";
-                            $updateQuery = $db->update($query);
-                            if ($updateQuery) {
-                                move_uploaded_file($file_tmp, $uploaded_image);
-                                echo "<script>alert('Updated successfully!')</script>";
-                            }else{
-                                echo "<script>alert('Updated not properly!')</script>";
-                            }
-                        }
-                    }
-
-                  ?>
 
                  <form method="POST" action="" enctype="multipart/form-data">
                     <table class="form">					

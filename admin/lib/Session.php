@@ -29,6 +29,12 @@ class Session{
 		}
 	}
 
+	public static function checkLogin(){
+			if (self::get("login") == true) {
+				header("Location:index.php");
+			}
+		}
+
 	public static function destroy(){
 		session_destroy();
 		header("Location:login.php");

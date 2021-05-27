@@ -45,19 +45,33 @@ $(window).load(function() {
 
 <body>
 	<div class="headersection templete clear">
+			<?php 
+
+	        $query = "SELECT * FROM title_slogan";
+	        $runData = $db->select($query);
+	        if ($runData) {
+	            $rows = $runData->fetch_assoc();
+	        }
+
+	     ?>
 		<a href="#">
 			<div class="logo">
-				<img src="images/logo.png" alt="Logo"/>
-				<h2>Website Title</h2>
-				<p>Our website description</p>
+				<img src="admin/<?= $rows['logo']; ?>" alt="Logo"/>
+				<h2><?= $rows['title']; ?></h2>
+				<p><?= $rows['slogan']; ?></p>
 			</div>
 		</a>
 		<div class="social clear">
 			<div class="icon clear">
-				<a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-				<a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-				<a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
-				<a href="#" target="_blank"><i class="fa fa-google-plus"></i></a>
+				<?php 
+                    $query = "SELECT * FROM tbl_social";
+                    $runSocial = $db->select($query);
+                    $rows = $runSocial->fetch_assoc();
+                 ?>		
+				<a href="<?= $rows['fb']; ?>" target="_blank"><i class="fa fa-facebook"></i></a>
+				<a href="<?= $rows['tw']; ?>" target="_blank"><i class="fa fa-twitter"></i></a>
+				<a href="<?= $rows['ln']; ?>" target="_blank"><i class="fa fa-linkedin"></i></a>
+				<a href="<?= $rows['gp']; ?>" target="_blank"><i class="fa fa-google-plus"></i></a>
 			</div>
 			<div class="searchbtn clear">
 			<form action="search" method="GET">
@@ -70,7 +84,14 @@ $(window).load(function() {
 <div class="navsection templete">
 	<ul>
 		<li><a id="active" href="index">Home</a></li>
-		<li><a href="about">About</a></li>	
 		<li><a href="contact">Contact</a></li>
+		 <?php 
+            $query = "SELECT * FROM tbl_page";
+            $runSocial = $db->select($query);
+            if ($runSocial) {
+            while ( $rows = $runSocial->fetch_assoc()) {
+            	$pageSlug = $rows['title']; ?>
+            <li><a href="page?pagename=<?= $pageSlug; ?>"><?= $rows['title'] ?></a></li> 
+        <?php }} ?>
 	</ul>
 </div>

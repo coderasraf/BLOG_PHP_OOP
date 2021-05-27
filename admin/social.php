@@ -2,17 +2,56 @@
 <?php include 'inc/sidebar.php'; ?>
         <div class="grid_10">
 		
+            <?php 
+
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                     
+                     $fb = $fm->validation($_POST['fb']);
+                     $tw = $fm->validation($_POST['tw']);
+                     $ln = $fm->validation($_POST['ln']);
+                     $gp = $fm->validation($_POST['gp']);
+
+                     $fb = mysqli_real_escape_string($db->link, $fb);
+                     $tw = mysqli_real_escape_string($db->link, $tw);
+                     $ln = mysqli_real_escape_string($db->link, $ln);
+                     $gp = mysqli_real_escape_string($db->link, $gp);
+
+                     if ($fb == '' || $tw == '' || $ln == '' || $gp == '') {
+                       echo "<script>alert('Field must not be empty!')</script>";
+                    }else{
+
+                        $query = "UPDATE tbl_social
+                                  SET
+                                  fb = '$fb',
+                                  tw = '$tw',
+                                  ln = '$ln',
+                                  gp = '$gp' WHERE id = 1";
+
+                        $insertSocial = $db->update($query);
+                        if ($insertSocial) {
+                            echo "<script>alert('Updated social links succcfully!')</script>";
+                        }
+                    }
+                }
+
+             ?>
+
             <div class="box round first grid">
                 <h2>Update Social Media</h2>
                 <div class="block">               
-                 <form>
-                    <table class="form">					
+                 <form method="POST" action="">
+                    <table class="form">
+                        <?php 
+                            $query = "SELECT * FROM tbl_social";
+                            $runSocial = $db->select($query);
+                            $rows = $runSocial->fetch_assoc();
+                         ?>					
                         <tr>
                             <td>
                                 <label>Facebook</label>
                             </td>
                             <td>
-                                <input type="text" name="facebook" placeholder="Facebook link.." class="medium" />
+                                <input name="fb" type="text" placeholder="Facebook link.." value="<?= $rows['fb']; ?>" class="medium" />
                             </td>
                         </tr>
 						 <tr>
@@ -20,7 +59,7 @@
                                 <label>Twitter</label>
                             </td>
                             <td>
-                                <input type="text" name="twitter" placeholder="Twitter link.." class="medium" />
+                                <input name="tw" value="<?= $rows['tw']; ?>" type="text" placeholder="Twitter link.." class="medium" />
                             </td>
                         </tr>
 						
@@ -29,7 +68,7 @@
                                 <label>LinkedIn</label>
                             </td>
                             <td>
-                                <input type="text" name="linkedin" placeholder="LinkedIn link.." class="medium" />
+                                <input value="<?= $rows['ln']; ?>" type="text" name="ln" placeholder="LinkedIn link.." class="medium" />
                             </td>
                         </tr>
 						
@@ -38,7 +77,7 @@
                                 <label>Google Plus</label>
                             </td>
                             <td>
-                                <input type="text" name="googleplus" placeholder="Google Plus link.." class="medium" />
+                                <input value="<?= $rows['gp']; ?>" type="text" name="gp" placeholder="Google Plus link.." class="medium" />
                             </td>
                         </tr>
 						

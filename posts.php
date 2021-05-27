@@ -19,7 +19,7 @@
 				<div class="samepost clear">
 					<h2><a href="post?id=<?= $post['id']; ?>"><?= $post['title']; ?></a></h2>
 					<h4><?= $fm->formatDate($post['date']); ?>, By <a href="#"><?= $post['author']; ?></a></h4>
-					 <a href="post?id=<?= $post['id']; ?>"><img src="admin/uploads/<?= $post['image']; ?>" alt="post image"/></a>
+					 <a href="post?id=<?= $post['id']; ?>"><img src="admin/<?= $post['image']; ?>" alt="post image"/></a>
 
 					 <?= $fm->textShorten($post['body'], 400); ?>
 

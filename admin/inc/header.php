@@ -58,15 +58,24 @@
 
 </head>
 <body>
+    <?php 
+
+        $query = "SELECT * FROM title_slogan";
+        $runData = $db->select($query);
+        if ($runData) {
+            $rows = $runData->fetch_assoc();
+        }
+
+     ?>
     <div class="container_12">
         <div class="grid_12 header-repeat">
             <div id="branding">
                 <div class="floatleft logo">
-                    <img src="img/livelogo.png" alt="Logo" />
+                    <img src="<?= $rows['logo']; ?>" alt="Logo" />
 				</div>
 				<div class="floatleft middle">
-					<h1>Hass Asraf</h1>
-					<p>www.hassasraf.com</p>
+					<h1><?= $rows['title']; ?></h1>
+					<p><?= $rows['slogan']; ?></p>
 				</div>
                 <div class="floatright">
                     <div class="floatleft">
