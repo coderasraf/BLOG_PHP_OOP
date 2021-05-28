@@ -36,6 +36,7 @@
 			$newPath = end($path);
 			$newPath = explode('.', $newPath);
 			$title   = $newPath[0];
+			$title   = str_replace('_', ' ', $title);
 
 			if ($title == 'index') {
 				$title = 'home';
@@ -45,7 +46,7 @@
 				$title = 'Hass Asraf';
 			}
 
-			return ucfirst($title);
+			return ucwords($title);
 
 		}
 		

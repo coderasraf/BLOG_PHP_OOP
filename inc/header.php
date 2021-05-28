@@ -43,7 +43,23 @@
 
 	<meta name="language" content="English">
 	<meta name="description" content="It is a website about education">
-	<meta name="keywords" content="blog,cms blog">
+	<?php 
+
+		$tags = '';
+		if (isset($_GET['id'])) {
+			$keywordid = $_GET['id'];
+			$query = "SELECT * FROM tbl_post WHERE id='$keywordid'";
+			$keyword = $db->select($query);
+			if ($keyword) {
+				$row = $keyword->fetch_assoc();
+				$tags = $row['tags'];
+			}
+		}else{
+			$tags = KEYWORDS;
+		}
+
+	 ?>
+	<meta name="keywords" content="<?= $tags; ?>">
 	<meta name="author" content="Delowar">
 	<link rel="stylesheet" href="font-awesome-4.5.0/css/font-awesome.css">	
 	<link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
@@ -114,15 +130,34 @@ $(window).load(function() {
 	</div>
 <div class="navsection templete">
 	<ul>
-		<li><a id="active" href="index">Home</a></li>
+		<?php 
+			$path = $_SERVER['SCRIPT_FILENAME'];
+			$currentPage = basename($path, '.php');
+		 ?>
+		<li>
+			<a <?php if ($currentPage == 'index') {echo "id='active'";}?> href="index">Home</a>
+		</li>
 		 <?php 
             $query = "SELECT * FROM tbl_page";
             $runSocial = $db->select($query);
             if ($runSocial) {
             while ( $rows = $runSocial->fetch_assoc()) {
             	$pageSlug = $rows['title']; ?>
-            <li><a href="page?pagename=<?= $pageSlug; ?>"><?= $rows['title'] ?></a></li> 
+            <li>
+            <a
+            <?php 
+            	if (isset($_GET['pagename'])) {
+            		if ($pageTitle == $rows['title']) {
+            			echo "id='active'";
+            	}
+            	}
+             ?>
+             href="page?pagename=<?= $pageSlug; ?>"><?= $rows['title'] ?></a></li> 
         <?php }} ?>
-        <li><a href="contact">Contact</a></li>
+        <li><a
+         <?php if ($currentPage == 'contact') {
+				echo "id='active'";
+			} ?>
+         href="contact">Contact US</a></li>
 	</ul>
 </div>
