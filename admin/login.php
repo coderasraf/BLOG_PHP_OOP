@@ -37,6 +37,8 @@
 				Session::set("login", true);
 				Session::set('username', $value['username']);
 				Session::set('userId', $value['id']);
+				Session::set('userrole', $value['roloe']);
+
 				header("Location:index.php");
 			}else{
 				echo "<span style='color:red;font-weight:bold;font-size:18px;'>No Result Found!</span>";

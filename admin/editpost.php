@@ -58,7 +58,7 @@
                        author   = '$author',
                        tags     = '$tags' WHERE id='$id'";
 
-               $updated_rows = $db->insert($query);
+               $updated_rows = $db->update($query);
                     if ($updated_rows) {
                         move_uploaded_file($file_tmp, $uploaded_image);
                         echo "<script>alert('Data updated successfully!')</script>";
@@ -76,7 +76,7 @@
                        author   = '$author',
                        tags     = '$tags' WHERE id='$id'";
 
-               $updated_rows = $db->insert($query);
+               $updated_rows = $db->update($query);
 
                 if ($updated_rows) {
                     echo "<script>alert('Data updated successfully!')</script>";
