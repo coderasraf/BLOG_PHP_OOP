@@ -31,18 +31,13 @@
 		$query = "SELECT * FROM tbl_user WHERE username = '$username' AND password = '$password'";
 		$result = $db->select($query);
 		if ($result != false) {
-			$value = mysqli_fetch_array($result);
-			$row = mysqli_num_rows($result);
-			if ($row > 0) {
+				$value  = $result->fetch_assoc();
 				Session::set("login", true);
 				Session::set('username', $value['username']);
-				Session::set('userId', $value['id']);
+				Session::set('userId', $value['userid']);
 				Session::set('userrole', $value['roloe']);
 
 				header("Location:index.php");
-			}else{
-				echo "<span style='color:red;font-weight:bold;font-size:18px;'>No Result Found!</span>";
-			}
 		}else{
 			echo "<span style='color:red;font-weight:bold;font-size:18px;'>Your Email or Password wrong!</span>";
 		}
@@ -62,6 +57,7 @@
 			</div>
 		</form><!-- form -->
 		<div class="button">
+			<a href="forgetpass.php">Forgot Password</a>
 			<a href="#">www.hassasraf.com</a>
 		</div><!-- button -->
 	</section><!-- content -->

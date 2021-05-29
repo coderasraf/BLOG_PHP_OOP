@@ -1,0 +1,24 @@
+	.headersection {background: #CA932F none repeat scroll 0 0;}
+	.maincontent {
+    background: #fef4e5 none repeat scroll 0 0;
+    border: 1px solid #ded4c5;
+	}
+	.sidebar {
+    background: #fef4e5 none repeat scroll 0 0;
+    border: 1px solid #ded4c5;
+}
+.samesidebar h2 {
+    background: #e6af4b none repeat scroll 0 0;
+    border-bottom: 2px solid #b7801c;
+    }
+ .navsection {background:#e6af4b none repeat scroll 0 0 #4b7d2c;}
+ .navsection ul li {
+    border-left: 1px solid #fdc662;
+    border-right: 1px solid #c18a26;
+}
+.readmore a {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #b7801c;
+    color: #b7801c;
+    }
+

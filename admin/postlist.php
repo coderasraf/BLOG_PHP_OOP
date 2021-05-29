@@ -64,9 +64,15 @@
 						<td><?= $single['tags']; ?></td>
 						<td><?= $fm->formatDate($single['date']); ?></td>
 						<td class="center"><?= $single['author']; ?></td>
-						<td>
-							<a href="editpost.php?editID=<?= $single['id']; ?>">Edit</a> || 
-							<a onclick="return confirm('Are you sure to delete!')" href="?delID=<?= $single['id']; ?>">Delete</a></td>
+		<td>
+
+			<a href="viewpost.php?postid=<?= $single['id']; ?>">View</a>
+			<?php 
+				if (Session::get('userId') == $single['userid'] || Session::get('userrole') == '0') { ?> 
+			||<a href="editpost.php?editID=<?= $single['id']; ?>">Edit</a> ||
+			<a onclick="return confirm('Are you sure to delete!')" href="?delID=<?= $single['id']; ?>">Delete</a>
+			<?php } ?>
+		</td>
 					</tr>
 				<?php }}else{
 					echo "No post available";

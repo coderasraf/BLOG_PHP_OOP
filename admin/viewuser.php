@@ -2,42 +2,24 @@
 <?php include 'inc/sidebar.php'; ?>
 <?php 
 
-    $userid = Session::get('userId');
-    $role   = Session::get('userrole');
-
-
-    if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
-        if (isset($_POST['submit'])) {
-            $name = mysqli_real_escape_string($db->link, $_POST['name']);
-            $username   = mysqli_real_escape_string($db->link, $_POST['username']);
-            $email  = mysqli_real_escape_string($db->link, $_POST['email']);
-            $details  = mysqli_real_escape_string($db->link, $_POST['body']);
-
-            $query ="UPDATE tbl_user 
-                       SET
-                       name         = '$name',
-                       username     = '$username',
-                       details      = '$details',
-                       email        = '$email' WHERE id='$userid'";
-
-               $updated_rows = $db->update($query);
-
-                if ($updated_rows) {
-                    echo "<script>alert('User updated successfully!')</script>";
-                }else{
-                    echo "<script>alert('Some error occoured!')</script>";
-                }
-        }
+    if (!isset($_GET['userid']) || $_GET['userid'] == NULL) {
+         echo "<script>window.open('userlist.php', '_self')</script>";
+    }else{
+        $id = $_GET['userid'];
     }
+
+  	if (isset($_POST['submit'])) {
+  		 echo "<script>window.open('userlist.php', '_self')</script>";
+  	}
  ?>
         <div class="grid_10">
 		
             <div class="box round first grid">
-                <h2>Update Post</h2>
+                <h2>Users Details</h2>
                 <div class="block">
                 <?php 
 
-                    $query = "SELECT * FROM tbl_user WHERE id='$userid' AND roloe='$role'";
+                    $query = "SELECT * FROM tbl_user WHERE id='$id'";
                     $getPost = $db->select($query);
                     $result  = $getPost->fetch_assoc();
                  ?>               
@@ -83,7 +65,7 @@
 						<tr>
                             <td></td>
                             <td>
-                                <input type="submit" name="submit" Value="Save" />
+                                <input type="submit" name="submit" Value="ok" />
                             </td>
                         </tr>
                     </table>

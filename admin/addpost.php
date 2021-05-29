@@ -10,6 +10,7 @@
         $tags  = mysqli_real_escape_string($db->link, $_POST['tags']);
         $body  = mysqli_real_escape_string($db->link, $_POST['body']);
         $author  = mysqli_real_escape_string($db->link, $_POST['author']);
+        $userid = Session::get('userId');
 
         $permitted = array('jpg','png','jpeg', 'gif');
         $file_name = $_FILES['image']['name'];
@@ -29,9 +30,9 @@
         }elseif(in_array($file_ext, $permitted) === false){
             echo "<script>alert('Your file should be jpg,png,gif,jpeg');</script>";
         }else{
-            $query = "INSERT INTO tbl_post (cat,title,body,image,author,tags,date) 
+            $query = "INSERT INTO tbl_post (cat,title,body,image,author,tags,date,userid) 
                       VALUES 
-                      ('$cat','$title','$body','$uploaded_image','$author','$tags','$date')";
+                      ('$cat','$title','$body','$uploaded_image','$author','$tags','$date','$userid')";
 
                     $inserted_rows = $db->insert($query);
 
@@ -123,7 +124,10 @@
                                 <label>Author Name</label>
                             </td>
                             <td>
-                                <input name="author" type="text" placeholder="Author Name ..." />
+                                <input value="<?= Session::get('username'); ?>" name="author" type="text" placeholder="Author Name ..." />
+                            </td>
+                            <td>
+                                <input hidden="" value="<?= Session::get('userId'); ?>" name="userid" type="text" placeholder="Author Name ..." />
                             </td>
                         </tr>
 						<tr>

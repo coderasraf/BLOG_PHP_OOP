@@ -18,7 +18,7 @@
 			<!-- End paginatio code -->
 
 			<?php 
-				$sql = "SELECT * FROM tbl_post LIMIT $start_from, $per_page";
+				$sql = "SELECT * FROM tbl_post ORDER BY id DESC LIMIT $start_from, $per_page";
 				$posts = $db->select($sql);
 				if ($posts) {
 				foreach ($posts as $post) { ?>

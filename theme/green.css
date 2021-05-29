@@ -1,0 +1,125 @@
+body{
+		font-family: 'Open Sans', sans-serif;
+	}
+	.headersection {
+    background: linear-gradient(to right, #6bb341c9, #9dff6294);}
+	.icon a {background: #4b7d2c none repeat scroll 0 0;}
+	.searchbtn input[type="submit"] {
+    background: #4b7d2c none repeat scroll 0 0;
+    border: 1px solid #4b7d2c;
+}
+	.searchbtn input[type="submit"]:hover {background: #365d1f none repeat scroll 0 0;border: 1px solid #4b7d2c;}
+	 .searchbtn input[type="text"] {border: 1px solid #4b7d2c;background: #fff;}
+	 .navsection {
+    background: linear-gradient(to left, #8dda61c9, #4b7d2cb8);
+}
+	 .navsection ul li {
+    border-left: none;
+    border-right: none;
+}
+.maincontent {
+    background: #f9f9f9;
+    border: none;
+}
+.samepost h2 a {color: #5d5b57;}
+.readmore a {
+    background: #4b7d2c none repeat scroll 0 0;
+    border: 1px solid #4b7d2c;
+    color: #fff;
+}
+.samepost h2, .about h2 {
+    border-bottom: 2px solid #e6e6e6;
+    font-size: 25px;
+    font-weight: 600;
+    }
+.contentsection {border: none}
+.sidebar {
+    background: #f9f9f9 none repeat scroll 0 0;
+    border: none;
+}
+.samesidebar h2 {
+    background: linear-gradient(to left, #8dda61c9, #4b7d2cb8);
+    border-bottom: 2px solid #7ea367;
+    color: #fff;
+    margin-bottom: 20px;
+}
+.popular img{
+	border-radius: 0;
+}
+.popular h3 {
+    border-bottom: 1px dashed #4b7d2c;}
+.nivo-caption{
+	display: none !important;
+}
+.samepost img{
+	border: none;
+}
+.popular img{
+	border: none;
+}
+.samesidebar ul li{
+	border: none;
+}
+.pagination a {
+    background: #4b7d2c;
+    }
+    .pagination .active {
+    background: #57982f;
+}
+searchbtn input[type="text"] {
+    border: 1px solid #4b7d2c;
+    background: #fff;
+}
+.samesidebar ul li a {
+    color: #000;
+    text-decoration: none;
+}
+.footersection {
+    background: #4b7d2c;
+}
+.footermenu ul li a {
+    color: #fff;
+    font-size: 17px;
+    margin-right: 14px;
+    text-decoration: none;
+}
+.footersection p {
+    color: #fff;
+    opacity: .8;
+}
+body{
+	background: linear-gradient(to right, #c5faa6c9, #d0ffb494);
+}
+.about img {
+    width: 100%;
+    margin-bottom: 10px;
+    border: none;
+}
+.about a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+.about img {
+    width: 100%;
+    margin-bottom: 10px;
+    border: none;
+}
+
+.about a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+.about iframe {
+    width: 100%;
+}
+.navsection ul li a {
+    font-size: 16px;
+    font-weight: 600;
+    }
+
+    .relatedpost img {
+    width: auto !important;
+}

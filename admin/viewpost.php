@@ -2,105 +2,21 @@
 <?php include 'inc/sidebar.php'; ?>
 <?php 
 
-    if (!isset($_GET['editID']) || $_GET['editID'] == NULL) {
+    if (!isset($_GET['postid']) || $_GET['postid'] == NULL) {
          echo "<script>window.open('postlist.php', '_self')</script>";
     }else{
-        $id = $_GET['editID'];
+        $id = $_GET['postid'];
     }
-    
-    if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
-        if (isset($_POST['submit'])) {
-         $title = mysqli_real_escape_string($db->link, $_POST['title']);
-        $cat   = mysqli_real_escape_string($db->link, $_POST['cat']);
-        $date  = mysqli_real_escape_string($db->link, $_POST['date']);
-        $tags  = mysqli_real_escape_string($db->link, $_POST['tags']);
-        $body  = mysqli_real_escape_string($db->link, $_POST['body']);
-        $author  = mysqli_real_escape_string($db->link, $_POST['author']);
-
-        $permitted = array('jpg','png','jpeg', 'gif');
-        $file_name = $_FILES['image']['name'];
-        $file_size = $_FILES['image']['size'];
-        $file_tmp  = $_FILES['image']['tmp_name'];
-
-        $div = explode('.', $file_name);
-        $file_ext = strtolower(end($div));
-        $unique_image = substr(md5(time()), 0, 15).'.'.$file_ext;
-        $uploaded_image = 'uploads/'.$unique_image;
-
-
-        if ($title == '' || $tags == '' || $cat == '' || $date == '' || $body == '' || $author == '') {
-          $error = 'Fields must not be empty!';
-        }else{
-
-           
-
-        if (!empty($file_name)) {
-            
-            $selectCurrentIMG = "SELECT image FROM tbl_post WHERE id='$id'";
-            $runIMG = $db->select($selectCurrentIMG);
-            $rowIMG = $runIMG->fetch_assoc();
-
-            if (file_exists($rowIMG['image'])) {
-                   unlink($rowIMG['image']);
-               }
-
-            if($file_size > 1048567){
-                echo "<script>alert('Image size should be less that 1 MB')</script>";
-            }elseif(in_array($file_ext, $permitted) === false){
-                echo "<script>alert('Your file should be jpg,png,gif,jpeg');</script>";
-            }else{
-              $query ="UPDATE tbl_post 
-                       SET
-                       cat      = '$cat',
-                       title    = '$title',
-                       body     = '$body',
-                       image    = '$uploaded_image',
-                       author   = '$author',
-                       tags     = '$tags' WHERE id='$id'";
-
-               $updated_rows = $db->update($query);
-                    if ($updated_rows) {
-                        move_uploaded_file($file_tmp, $uploaded_image);
-                        echo "<script>alert('Data updated successfully!')</script>";
-                    }else{
-                        echo "<script>alert('Some error occoured!')</script>";
-                    }
-            }
-        }else{
-
-            $userid = Session::get('userId');
-            $query ="UPDATE tbl_post 
-                       SET
-                       cat      = '$cat',
-                       title    = '$title',
-                       body     = '$body',
-                       author   = '$author',
-                       userid   = '$userid',
-                       tags     = '$tags' WHERE id='$id'";
-
-               $updated_rows = $db->update($query);
-
-                if ($updated_rows) {
-                    echo "<script>alert('Data updated successfully!')</script>";
-                }else{
-                    echo "<script>alert('Some error occoured!')</script>";
-                }
-        }
-    }
-}
-}
  ?>
         <div class="grid_10">
-		
-            <div class="box round first grid">
-                <h2>Update Post</h2>
-                <div class="block">
-                <?php 
-
+		      <?php 
                     $query = "SELECT * FROM tbl_post WHERE id='$id' LIMIT 1";
                     $getPost = $db->select($query);
                     $result  = $getPost->fetch_assoc();
-                 ?>               
+                 ?> 
+            <div class="box round first grid">
+                <h2>Post - <?php echo $result['title']; ?></h2>
+                <div class="block">              
                  <form action="" method="POST" enctype="multipart/form-data">
                     <?php if (isset($error)) {
                         echo "<div class='alert alert-warning'>$error</div>";
@@ -112,7 +28,7 @@
                                 <label>Title</label>
                             </td>
                             <td>
-                                <input name="title" type="text" placeholder="Enter Post Title..." value="<?= $result['title']; ?>" class="medium" />
+                                <input readonly="" name="title" type="text" placeholder="Enter Post Title..." value="<?= $result['title']; ?>" class="medium" />
                             </td>
                         </tr>
                      
@@ -122,7 +38,7 @@
                             </td>
                             <td>
                                 <select id="select" name="cat">
-                                    <option value="">Select Category</option>
+                                    <option value="">Category</option>
                                     <?php 
                                         $sql = "SELECT * FROM tbl_category";
                                         $runSql = $db->select($sql);
@@ -143,15 +59,15 @@
                     
                         <tr>
                             <td>
-                                <label>Date Picker</label>
+                                <label>Date</label>
                             </td>
                             <td>
-                                <input value="<?= $result['date']; ?>" name="date" type="date" id="date-picker" />
+                                <input readonly="" value="<?= $result['date']; ?>" name="date" type="date" id="date-picker" />
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label>Upload Image</label>
+                                <label> Image</label>
                             </td>
                             <td>
                                 <input name="image" type="file" />
@@ -163,7 +79,7 @@
                                 <label>Content</label>
                             </td>
                             <td>
-                                <textarea name="body" class="tinymce">
+                                <textarea readonly="" name="body" class="tinymce">
                                     <?= $result['body']; ?>
                                 </textarea>
                             </td>
